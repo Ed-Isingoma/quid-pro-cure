@@ -7,6 +7,12 @@ function checkLogins() {
     psw.value = ''
     if (username == 'testuser' && password == 'abc123') {
         const link = document.querySelector('.enter')
+        const profile = document.querySelector('#usertype')
+        if (profile.value == 'Employee') {
+            link.href = "dashboard.html"
+        } else if (profile.value == 'Supplier') {
+            link.href = "suppDashboard.html"
+        }
         link.dispatchEvent(new MouseEvent('click'))
     } else {
         showToast('Incorrect password/username combination')

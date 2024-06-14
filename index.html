@@ -10,18 +10,18 @@
     <div class="loginContainer">
         <h1>Quid-Pro-Cure Login</h1>
         <label for="usertype">Login as:</label>
-        <select name="usertype">
-            <option value="employee">Employee</option>
-            <option value="employee">Supplier</option>
+        <select name="usertype" id="usertype">
+            <option value="Employee">Employee</option>
+            <option value="Supplier">Supplier</option>
         </select>
         <label for="username">Username:</label>
-        <input type="text" id="username">
+        <input type="text" id="username" name="username">
         <label for="password">Password:</label>
         <input type="password" name="password" id="password">
         <div class="button-container">
             <button onclick="checkLogins()">Login</button>
             <button>Create Account</button>
-            <a class="enter" href="dashboard.html"></a>
+            <a class="enter"></a>
         </div>
     </div>
     <script src="loginscr.js"></script>

@@ -28,7 +28,7 @@ body {
     background-color: rgb(0, 97, 97);
 }
 .goes-down-here {
-    width: 80%;
+    width: 88%;
     margin: auto;
     margin-top: 25px;
     padding: 15px;
@@ -127,4 +127,55 @@ body {
 
 .oneInput textarea {
     resize: none;
+}
+.searchForm {
+    width: 100%;
+    display: flex;
+    margin-bottom: 15px;
+}
+.searchForm * {
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+.searchBtn {
+    width: 12%;
+    margin-left: 10px;
+    font-size: 16px;
+}
+.buttonsDiv {
+    margin: 5px;
+}
+.pgButton {
+    min-width: 15%;
+    padding: 5px 30px;
+    font-size: 16px;
+    border-radius: 15px;
+    color: white;
+    margin: 0 5px;
+    font-weight: bold;
+    background-color: rgb(2, 174, 174);
+}
+.totalsWords {
+    text-align: right;
+    font-weight: bold;
+}
+.layoutBorder {
+    width: 100%;
+    border: 2px solid teal;
+    margin-top: -1px;
+}
+.layoutTitle {
+    width: 100%;
+    background-color: rgb(153, 188, 163);;
+    color: #333;
+    font-weight: bold;
+    padding: 3px 5px;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+@media (max-width:1100px){
+    .goes-down-here {
+        width: 100%;
+    }
 }

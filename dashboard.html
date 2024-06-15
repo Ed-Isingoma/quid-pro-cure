@@ -8,16 +8,16 @@
 </head>
 <body>
     <div class="navdiv">
-        <div class="nav-el"><button class="homebtn" onclick="goHome()">Home</button></div>
+        <div class="nav-el"><button class="homebtn" onclick="showPage('home')">Home</button></div>
         <div class="nav-el">Procurement
             <div class="drop-list">
                 <button class="list-btn" onclick="showPage('createRFQ')">Create RFQ</button>
-                <button class="list-btn">Process RFQ</button>
-                <button class="list-btn">Process Quotation</button>
-                <button class="list-btn">Rejected Quotations</button>
-                <button class="list-btn">Purchase Request Awaiting Approval</button>
+                <button class="list-btn" onclick="showPage('processRFQ')">Process RFQ</button>
+                <button class="list-btn" onclick="showPage('processQuotation')">Process Quotation</button>
+                <button class="list-btn" onclick="showPage('thrownQuotation')">Rejected Quotations</button>
+                <button class="list-btn" onclick="showPage('purchaseReqAwaiting')">Purchase Request Awaiting Approval</button>
                 <button class="list-btn">Processed Purchase Order</button>
-                <button class="list-btn">Process Delivery Note or Voucher</button>
+                <button class="list-btn" onclick="showPage('processDeliveryNote')">Process Delivery Note or Voucher</button>
                 <button class="list-btn">Process Outstanding Items</button>
                 <button class="list-btn">RFQ Status Report</button>
             </div>

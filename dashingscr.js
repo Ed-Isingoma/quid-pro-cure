@@ -1,10 +1,3 @@
-/*
-##then function for confirmatory prompts
-##function for appending inputs with their labels into div. there's text fields and normal input fields
-##function that does the VAT and total of Totals
-##functions that adds a search and its button. This one is a form
-##function that handles click of back button. It clears page without setting global variable data and then makes the global variable data to get onto the page, and then disables the 'back' functionality
-*/
 const archive = {
     0: [
         ["RFQ1234567", "PR1234567", "PO1234567", "INV1234567"],
@@ -66,8 +59,8 @@ const archive = {
         [9, "Item Description I", 90],
         [10, "Item Description J", 100]
     ],
-    5: {},
-    6: {},
+    5: [],
+    6: [],
     7: {},
     8: {},
     9: {},
@@ -91,31 +84,28 @@ const pages = {
             largeInputs: ['RFQ Description', 'RFQ Conditions/criteria'],
             buttons: {
                 names: {
-                    'Generate RFQ number': '',
-                    'Cancel RFQ': ''
+                    'Generate RFQ number': 'createRFQ',
+                    'Cancel RFQ': 'createRFQ'
                 },
                 confirmAt: ['Generate RFQ number']
             }
         },
         2: {
             title: 'RFQ Item',
-            // tableCols: {
-            //     id: 1,
-            //     names: ['RFQ_Item_ID', 'RFQ_Number', 'RFQ_Item_Description', 'RFQ_Item_Qty']
-            // },
             smallInputs: ['RFQ_Item_ID', 'RFQ_Number', 'RFQ_Item_Description', 'RFQ_Item_Qty'],
             buttons: {
                 names: {
-                    'Add RFQ Item': ''
-                }
+                    'Add RFQ Item': 'addToTable'
+                },
+                targetTable: 2
             }
         },
         3: {
             title: 'RFQ Item Details',
             tableCols: {
                 id: 2,
-                names: ['RFQ_Item_ID', 'RFQ_Number', 'RFQ_Item_Description', 'RFQ_Item_Qty'],
-                contextMenu: {
+                names: ['RFQ_Item_ID', 'RFQ_Number', 'RFQ_Item_Description', 'RFQ_Item_Qty', ''],
+                button: {
                     'Delete': ''
                 }
             },
@@ -128,8 +118,8 @@ const pages = {
             tableCols: {
                 id: 3,
                 names: ['RFQ_Number', 'RFQ_Description', 'RFQ_Condition', 'RFQ_Date_Created', 'RFQ_Date_Expiry', ''],
-                buttonAt: {
-                    5: viewProcessRFQDetails
+                button: {
+                    'View Process Details': viewProcessRFQDetails
                 }
             }
         }
@@ -138,9 +128,10 @@ const pages = {
         1: {
             title: '#',
             tableCols: {
-                names: ['RFQ_Item_ID', 'RFQ_Item_Description', 'RFQ_Item_Qty'],
-                contextMenu: {
-                    'Link to service': ''
+                id: 12,
+                names: ['RFQ_Item_ID', 'RFQ_Item_Description', 'RFQ_Item_Qty', ''],
+                button: {
+                    'Link to service': 'linkRFQtoService'
                 }
             }
         }
@@ -152,7 +143,7 @@ const pages = {
             largeInputs: ['RFQ description', 'RFQ condition/criteria', 'Service description', 'Account Description'],
             buttons: {
                 names: {
-                    'Link RFQ to Service': ''
+                    'Link RFQ to Service': 'linkRFQtoService'
                 },
                 confirmAt: ['Link RFQ to Service']
             }
@@ -165,7 +156,7 @@ const pages = {
             },
             buttons: {
                 names: {
-                    'Send notification email to selected suppliers': ''
+                    'Send notification email to selected suppliers': 'linkRFQtoService'
                 }
             }
         }
@@ -177,8 +168,8 @@ const pages = {
             tableCols: {
                 id: 5,
                 names: ['Quotation_ID', 'Supplier_ID', 'RFQ_Number', 'Date_created', 'conditions', 'Special_instruction', 'Q_Cost', ''],
-                buttonAt: {
-                    7: viewQuoteDetails
+                button: {
+                    'View Details': viewQuoteDetails
                 }
             }
         }
@@ -187,6 +178,7 @@ const pages = {
         1: {
             title: '#',
             tableCols: {
+                id: 13,
                 names: ['Quotation_ID', 'Item_ID', 'Item Description', 'Quantity', 'Unit Price', 'Discount', 'Total'],
                 vATandTotalsTarget: 'Total'
             },
@@ -204,7 +196,12 @@ const pages = {
             title: 'Rejected Quotation',
             smallInputs: ['Quotation ID'],
             largeInputs: ['Comments'],
-            buttons: ['Submit']
+            buttons: {
+                names: {
+                    'Submit': 'thrownQuotation',
+                },
+                confirmAt: ['Submit']
+            }
         }
     },
     creatingPurchaseRequest: {
@@ -214,8 +211,8 @@ const pages = {
             largeInputs: ['Cost Center Description', 'Service Description', 'Rationale/Comments'],
             buttons: {
                 names: {
-                    'Generate PR': '',
-                    'Back to Quotation': ''
+                    'Generate PR': 'creatingPurchaseRequest',
+                    'Back to Quotation': 'viewQuoteDetails'
                 },
                 confirmAt: ['Generate PR', 'Back to Quotation']
             }
@@ -235,10 +232,10 @@ const pages = {
             searchLabel: 'Search by Purchase Request Number',
             tableCols: {
                 id: 7,
-                names: ['PR_ID', 'Requestor', 'CC_Number', 'Rationale', 'Supplier_ID', 'Service_ID', 'Status', 'Date_Created', 'Total- include VAT', 'Budget Status'],
-                contextMenu: {
+                names: ['PR_ID', 'Requestor', 'CC_Number', 'Rationale', 'Supplier_ID', 'Service_ID', 'Status', 'Date_Created', 'Total- include VAT', 'Budget Status', ''],
+                button: {
                     'View item details': 'viewingItemDetails',
-                    'Approvals': ''
+                    // 'Approvals': ''
                 }
             }
         }
@@ -283,8 +280,8 @@ const pages = {
             title: 'Procurement- Process Approved Purchase Request',
             tableCols: {
                 id: 10,
-                names: ['Purchase_Request_ID', 'Employee_ID', 'Status', 'Date Updated', 'Comments'],
-                contextMenu: {
+                names: ['Purchase_Request_ID', 'Employee_ID', 'Status', 'Date Updated', 'Comments', ''],
+                button: {
                     'Create Purchase Order': ''
                 }
             }
@@ -295,8 +292,8 @@ const pages = {
             title: 'Procurement- Process Delivery Note or Voucher',
             tableCols: {
                 id: 11,
-                names: ['Purchase_Order_ID', 'Purchase_Request_ID', 'Date_created'],
-                contextMenu: {
+                names: ['Purchase_Order_ID', 'Purchase_Request_ID', 'Date_created', ''],
+                button: {
                     'Create Delivery Note': 'creatingDelivNote'
                 }
             }
@@ -322,6 +319,7 @@ const pages = {
         1 : {
             title: 'Invoices Awaiting Approval',
             tableCols: {
+                id:14,
                 names: ['Delivery_Note_ID', 'Invoice_ID', 'Employee_ID', 'RStatus', 'Date_created', 'Comment'],
                 editIndex: [3, 5]
             }
@@ -332,8 +330,9 @@ const pages = {
             title: '#',
             searchLabel: 'Search by Quote Number',
             tableCols: {
-                names: ['Invoice_ID', 'Purchase_Order_ID', 'Delivery_Note_ID', 'Employee_ID', 'Department_ID', 'Supplier_ID', 'Date_captured', 'Due_Date'],
-                contextMenu: {
+                id:15,
+                names: ['Invoice_ID', 'Purchase_Order_ID', 'Delivery_Note_ID', 'Employee_ID', 'Department_ID', 'Supplier_ID', 'Date_captured', 'Due_Date', ''],
+                button: {
                     'View Item Details': 'itemDetails'
                 }
             }
@@ -353,6 +352,7 @@ const pages = {
         2 : {
             title: 'Invoice Item details',
             tableCols: {
+                id:16,
                 names: ['Invoice_Item_ID', 'Invoice_ID', 'Purchase_Order_ID', 'Item Description', 'Quantity', 'Amount', 'Discount', 'Total'],
                 vATandTotalsTarget: 'Total'
             }
@@ -362,8 +362,9 @@ const pages = {
         1 : {
             title: 'Purchase Order to be invoiced',
             tableCols: {
-                names: ['RFQ_Number', 'RFQ_Description', 'RFQ_Condition', 'RFQ_Date_created', 'RFQ_Date_expiry', 'Supplier_ID'],
-                contextMenu: {
+                id: 17,
+                names: ['RFQ_Number', 'RFQ_Description', 'RFQ_Condition', 'RFQ_Date_created', 'RFQ_Date_expiry', 'Supplier_ID', ''],
+                button: {
                     'Create Quote': 'createQuote'
                 }
             }
@@ -384,6 +385,7 @@ const pages = {
         2 : {
             title: 'RFQ Items Details Information',
             tableCols: {
+                id:18,
                 names: ['RFQ_Item_ID', 'RFQ_Item_Description', 'RFQ_Item_Qty']
             }
         }
@@ -396,9 +398,9 @@ const pages = {
             buttons: {
                 names: {
                     'Generate Q Number': 'proceedWithQuote',
-                    'Clear Quote': '',
-                    confirmAt: ['Generate Q Number']
-                }
+                    'Clear Quote': 'proceedWithQuote'
+                },
+                confirmAt: ['Generate Q Number']
             }
         },
         2 : {
@@ -406,15 +408,16 @@ const pages = {
             smallInputs: ['Quotation Item Description', 'Qty', 'Amount', 'Discount'],
             buttons: {
                 names: {
-                    'Add Quotation Item': ''
+                    'Add Quotation Item': 'proceedWithQuote' //showToast that it
                 }
             }
         },
         3 : {
             title: 'Quotation Items Details',
             tableCols: {
-                names: ['Quotation Item ID', 'Quotation Id', 'Quotation_Item_Description', 'Quotation_Item_Qty', 'Quotation_Item_Amt', 'Quotation_Item_Discount (%)', 'Total'],
-                contextMenu: {
+                id:19,
+                names: ['Quotation Item ID', 'Quotation Id', 'Quotation_Item_Desc', 'Quotation_Item_Qty', 'Quotation_Item_Amt', 'Quotation_Item_Dscnt(%)', 'Total', ''],
+                button: {
                     'Delete': ''
                 },
                 vATandTotalsTarget: 'Total'
@@ -425,8 +428,9 @@ const pages = {
         1 : {
             title: 'Purchase Order to be Invoiced',
             tableCols: {
-                names: ['Delivery_Note_ID', 'Purchase_Order_ID', 'Date_created'],
-                contextMenu: {
+                id: 20,
+                names: ['Delivery_Note_ID', 'Purchase_Order_ID', 'Date_created', ''],
+                button: {
                     'Create Invoice': 'creatingInvoice'
                 }
             }
@@ -440,14 +444,15 @@ const pages = {
                 names: {
                     'Create Invoice': 'purchaseOrder2Binvoiced'
                 },
-                confirmAt: 'Create Invoice'
+                confirmAt: ['Create Invoice']
             }
         },
         2 : {
             title: 'Invoice Item details',
             tableCols: {
+                id: 21,
                 names: ['Purchase_Order_Item_ID', 'Purchase_Order_ID', 'Item Description', 'Quantity', 'Amount', 'Discount', 'Total'],
-                vATandTotalsTarget: 'Total' //the VAT part wasnt there
+                vATandTotalsTarget: 'Total'
             }
         }
     },
@@ -456,8 +461,9 @@ const pages = {
             title: 'Procurement- Purchase Requisition Information',
             searchLabel: 'Search by RFQ Number',
             tableCols: {
-                names: ['Supplier_ID', 'RFQ_Number', 'Quotation_ID', 'Date_Quoted', 'QStatus', 'Purchase_Request_ID', 'Purchase_Order_ID', 'Amount Invoiced', 'Payment Status'],
-                contextMenu: {
+                id: 22,
+                names: ['Supplier_ID', 'RFQ_Number', 'Quotation_ID', 'Date_Quoted', 'QStatus', 'Purchase_Request_ID', 'Purchase_Order_ID', 'Amount Invoiced', 'Payment Status', ''],
+                button: {
                     'View Quote Details': ''
                 }
             }
@@ -473,6 +479,16 @@ const layoutHandlers = {
     buttons: handleButtons,
     tableCols: handleTableCols,
 }
+
+function confirmThenCall(event, buttonName, funcName){
+    if (confirm(`${buttonName}?`)) {
+        if (funcName != 'addToTable' && funcName != 'deleteFromTable') {
+            showPage(funcName)
+        } else {
+            funcName(event)
+        }
+    }
+}
 /*
 >page name 
 >>layout name
@@ -482,26 +498,52 @@ const layoutHandlers = {
 +buttons
 -names ... obj  -name: function to be called
 -confirmAt ... arr
+-targetTable .. number
 +tableCols
 -names ... arr
 -editIndex ... arr (means that save and cancel buttons appear)
--buttonAt
--contextMenu ... obj  -menuItem: function to be called
+-button
 -vATandTotalsTarget ... single val
 */
+
+//add to table
+//put targetTables on the buttons
+//editIndex
+//do the search
+//handle click of back button
+//add sample data
+
+function addToTable(ev){
+
+    showToast('Record generated.')
+}
+
+function renderTable(){
+
+}
+
+function getElPosition(element) {
+    let index = 0;
+    while (element = element.previousElementSibling) {
+        index++;
+    }
+    return index;
+}
+
+function deleteFromTable(ev){
+    const row = ev.target.parentElement.parentElement
+    const index = getElPosition(row)
+    const table = row.parentElement
+    table.removeChild(row)
+    archive[table.dataset.tableID].splice(index,1)
+    showToast(`Record deleted.`)
+}
+
 function handleTitle(title) {
     const layoutTitle = document.createElement('div')
     layoutTitle.className = 'layoutTitle'
     layoutTitle.innerHTML = title
     return layoutTitle
-}
-
-function viewProcessRFQDetails() {
-
-}
-
-function viewQuoteDetails() {
-
 }
 
 function handleButtons(buttonsObj) {
@@ -510,8 +552,15 @@ function handleButtons(buttonsObj) {
     for (naem in buttonsObj.names) {
         const button = document.createElement('button')
         button.className = 'pgButton'
+        if ('targetTable' in buttonsObj) {
+            button.dataset.targetTable = buttonsObj.targetTable
+        }
         button.innerHTML = naem
-        button.onclick = buttonsObj.names.naem
+        if ('confirmAt' in buttonsObj && naem in buttonsObj.confirmAt) {
+            button.onclick = (event) => confirmThenCall(event, naem, buttonsObj.names.naem)
+        } else {
+            button.onclick = (event) => buttonsObj.names.naem(event)
+        }
         buttonsDiv.appendChild(button)
     }
     return buttonsDiv
@@ -527,6 +576,7 @@ function handleSearch(label) {
         `
     return form
 }
+
 function searcher(ev) {
     ev.preventDefault()
     const searchVal = document.querySelector('.searcher').value
@@ -566,6 +616,7 @@ function handleLargeInputs(inputsArr) {
 function handleTableCols(colsObj) {
     const table = document.createElement('table')
     table.className = 'einTable'
+    table.dataset.tableID = colsObj.id
     const header = document.createElement('tr')
     for (column of colsObj.names) {
         const col = document.createElement('th')
@@ -586,9 +637,6 @@ function handleTableCols(colsObj) {
     } else {
         for (record of data) {
             const row = document.createElement('tr')
-            if ('contextMenu' in colsObj) {
-                row.classList.add('contextable')
-            }
             for (colnum in colsObj.names) {
                 const datacol = document.createElement('td')
                 datacol.classList.add('bodyCol')
@@ -600,10 +648,11 @@ function handleTableCols(colsObj) {
                     row.querySelector(`td:nth-child(${num + 1})`).classList.add('editable')
                 }
             }
-            if ('buttonAt' in colsObj) {
+            if ('button' in colsObj) {
                 const el = row.querySelector('td:last-child')
                 const button = document.createElement('button')
                 button.className = 'pgButton'
+                button.onclick = (event) => confirmThenCall(event, el.innerHTML, colsObj.button[el.innerHTML])
                 button.innerHTML = el.innerHTML
                 el.innerHTML = ''
                 el.appendChild(button)
@@ -616,20 +665,24 @@ function handleTableCols(colsObj) {
             vatEl.colSpan = colsObj.length - 1
             vatEl.innerHTML = 'VAT:'
             vatEl.classList.add('bodyCol', 'totalsWords')
-            vatsRow.appendChild(vatEl)
             const vatVal = document.createElement('td')
             vatVal.className = 'bodyCol'
-            vatVal.innerHTML = 'TBD'
-            vatsRow.appendChild(vatVal)
             const totalsRow = document.createElement('tr')
             const totalEl = document.createElement('td')
             totalEl.colSpan = colsObj.length - 1
             totalEl.innerHTML = 'Total:'
             totalEl.classList.add('bodyCol', 'totalsWords')
-            totalsRow.appendChild(totalEl)
             const totalVal = document.createElement('td')
             totalVal.className = 'bodyCol'
-            totalVal.innerHTML = 'TBD'
+            let total = 0
+            for (record of data) {
+                total+= +record[-1]
+            }
+            vatVal.innerHTML = total * 0.18
+            totalVal.innerHTML = total
+            vatsRow.appendChild(vatEl)
+            vatsRow.appendChild(vatVal)
+            totalsRow.appendChild(totalEl)
             totalsRow.appendChild(totalVal)
             table.appendChild(vatsRow)
             table.appendChild(totalsRow)

@@ -10,7 +10,7 @@ const archive = {
         ["RFQ8901234", "PR8901234", "PO8901234", "INV8901234"],
         ["RFQ9012345", "PR9012345", "PO9012345", "INV9012345"],
         ["RFQ0123456", "PR0123456", "PO0123456", "INV0123456"]
-      ],
+    ],
     1: [
         [1, "RFQ1001", "Widget A", 100],
         [2, "RFQ1002", "Widget B", 200],
@@ -36,28 +36,23 @@ const archive = {
         [10, "RFQ1010", "Part J", 600, 'Delete']
     ],
     3: [
-        ["RFQ1001", "Description A", "New", "2024-01-01", "2024-06-01", "View Process details"],
-        ["RFQ1002", "Description B", "Pending", "2024-02-01", "2024-07-01", "View Process details"],
-        ["RFQ1003", "Description C", "Approved", "2024-03-01", "2024-08-01", "View Process details"],
-        ["RFQ1004", "Description D", "Rejected", "2024-04-01", "2024-09-01", "View Process details"],
-        ["RFQ1005", "Description E", "New", "2024-05-01", "2024-10-01", "View Process details"],
-        ["RFQ1006", "Description F", "Pending", "2024-06-01", "2024-11-01", "View Process details"],
-        ["RFQ1007", "Description G", "Approved", "2024-07-01", "2024-12-01", "View Process details"],
-        ["RFQ1008", "Description H", "Rejected", "2024-08-01", "2025-01-01", "View Process details"],
-        ["RFQ1009", "Description I", "New", "2024-09-01", "2025-02-01", "View Process details"],
-        ["RFQ1010", "Description J", "Pending", "2024-10-01", "2025-03-01", "View Process details"]
+        ["RFQ1001", "Description A", "New", "2024-01-01", "2024-06-01", "View Process Details"],
+        ["RFQ1002", "Description B", "Pending", "2024-02-01", "2024-07-01", "View Process Details"],
+        ["RFQ1003", "Description C", "Approved", "2024-03-01", "2024-08-01", "View Process Details"],
+        ["RFQ1004", "Description D", "Rejected", "2024-04-01", "2024-09-01", "View Process Details"],
+        ["RFQ1005", "Description E", "New", "2024-05-01", "2024-10-01", "View Process Details"],
+        ["RFQ1006", "Description F", "Pending", "2024-06-01", "2024-11-01", "View Process Details"],
+        ["RFQ1007", "Description G", "Approved", "2024-07-01", "2024-12-01", "View Process Details"],
+        ["RFQ1008", "Description H", "Rejected", "2024-08-01", "2025-01-01", "View Process Details"],
+        ["RFQ1009", "Description I", "New", "2024-09-01", "2025-02-01", "View Process Details"],
+        ["RFQ1010", "Description J", "Pending", "2024-10-01", "2025-03-01", "View Process Details"]
     ],
     4: [
-        [1, "Item Description A", 10],
-        [2, "Item Description B", 20],
-        [3, "Item Description C", 30],
-        [4, "Item Description D", 40],
-        [5, "Item Description E", 50],
-        [6, "Item Description F", 60],
-        [7, "Item Description G", 70],
-        [8, "Item Description H", 80],
-        [9, "Item Description I", 90],
-        [10, "Item Description J", 100]
+        ['Select_Supplier', 'SUP001', 'ABC Supplies', 'contact@abcsupplies.com', false],
+        ['Select_Supplier', 'SUP002', 'XYZ Traders', 'sales@xyztraders.com', false],
+        ['Select_Supplier', 'SUP003', 'Global Goods', 'info@globalgoods.com', true],
+        ['Select_Supplier', 'SUP004', 'Quick Deliveries', 'support@quickdeliveries.com', false],
+        ['Select_Supplier', 'SUP005', 'Quality Equipment', 'service@qualityequipment.com', true]
     ],
     5: [
         ['QUO001', 'SUP001', 'RFQ202301', '2023-06-15', 'Standard conditions', 'None', 1500, 'View Details'],
@@ -79,10 +74,10 @@ const archive = {
         ['QUO010', 'ITEM002', 'Gadget B', 'ACCT123', 7, 50.00, 5, 350.00]
     ],
     7: [
-        ['PR001', 'User1', 'CC1234', 'Rationale 1', 'SUP001', 'SVC001', 'Pending', '2023-06-15', 2500.50, 'Within budget', 'View item details'],
-        ['PR002', 'User2', 'CC5678', 'Rationale 2', 'SUP002', 'SVC002', 'Approved', '2023-06-15', 1800.75, 'Over budget', 'View item details'],
-        ['PR003', 'User3', 'CC2468', 'Rationale 3', 'SUP003', 'SVC003', 'Pending', '2023-06-14', 3100.25, 'Within budget', 'View item details'],
-        ['PR004', 'User4', 'CC1357', 'Rationale 4', 'SUP002', 'SVC004', 'Approved', '2023-06-14', 2200.00, 'Over budget', 'View item details']
+        ['PR001', 'User1', 'CC1234', 'Rationale 1', 'SUP001', 'SVC001', 'Pending', '2023-06-15', 2500.50, 'Within budget', 'View details'],
+        ['PR002', 'User2', 'CC5678', 'Rationale 2', 'SUP002', 'SVC002', 'Approved', '2023-06-15', 1800.75, 'Over budget', 'View details'],
+        ['PR003', 'User3', 'CC2468', 'Rationale 3', 'SUP003', 'SVC003', 'Pending', '2023-06-14', 3100.25, 'Within budget', 'View details'],
+        ['PR004', 'User4', 'CC1357', 'Rationale 4', 'SUP002', 'SVC004', 'Approved', '2023-06-14', 2200.00, 'Over budget', 'View details']
     ],
     8: [
         ['PR_ITEM001', 'PR001', 'ACCT123', 'Widget A', 10, 250.00, 5, 2375.00],
@@ -144,11 +139,11 @@ const archive = {
         ['DN005', 'INV005', 'EMP002', 'Delivered', '2023-06-11', 'Invoice sent to accounting']
     ],
     15: [
-        ['INV001', 'PO001', 'DN001', 'EMP001', 'DEP001', 'SUP001', '2023-06-15', '2023-07-15', 'View Item Details'],
-        ['INV002', 'PO002', 'DN002', 'EMP002', 'DEP002', 'SUP002', '2023-06-14', '2023-07-14', 'View Item Details'],
-        ['INV003', 'PO003', 'DN003', 'EMP003', 'DEP003', 'SUP003', '2023-06-13', '2023-07-13', 'View Item Details'],
-        ['INV004', 'PO004', 'DN004', 'EMP001', 'DEP001', 'SUP002', '2023-06-12', '2023-07-12', 'View Item Details'],
-        ['INV005', 'PO005', 'DN005', 'EMP002', 'DEP002', 'SUP001', '2023-06-11', '2023-07-11', 'View Item Details']
+        ['INV001', 'PO001', 'DN001', 'EMP001', 'DEP001', 'SUP001', '2023-06-15', '2023-07-15', 'View Details'],
+        ['INV002', 'PO002', 'DN002', 'EMP002', 'DEP002', 'SUP002', '2023-06-14', '2023-07-14', 'View Details'],
+        ['INV003', 'PO003', 'DN003', 'EMP003', 'DEP003', 'SUP003', '2023-06-13', '2023-07-13', 'View Details'],
+        ['INV004', 'PO004', 'DN004', 'EMP001', 'DEP001', 'SUP002', '2023-06-12', '2023-07-12', 'View Details'],
+        ['INV005', 'PO005', 'DN005', 'EMP002', 'DEP002', 'SUP001', '2023-06-11', '2023-07-11', 'View Details']
     ],
     16: [
         ['INV_ITEM001', 'INV001', 'PO001', 'Item A', 10, 50.00, 5, 475.00],
@@ -291,7 +286,7 @@ const pages = {
                 id: 12,
                 names: ['RFQ_Item_ID', 'RFQ_Item_Description', 'RFQ_Item_Qty', ''],
                 button: {
-                    'Link to service': 'linkRFQtoService'
+                    'Link to Service': 'linkRFQtoService'
                 }
             }
         }
@@ -327,7 +322,7 @@ const pages = {
             searchMetric: ["Search by Quote Number", 1],
             tableCols: {
                 id: 5,
-                names: ['Quotation_ID', 'Supplier_ID', 'RFQ_Number', 'Date_created', 'conditions', 'Special_instruction', 'Q_Cost', ''],
+                names: ['Quotation ID', 'Supplier ID', 'RFQ Number', 'Date created', 'Conditions', 'Special Instruction', 'Q_Cost', ''],
                 button: {
                     'View Details': 'viewQuoteDetails'
                 }
@@ -336,10 +331,10 @@ const pages = {
     },
     viewQuoteDetails: {
         1: {
-            title: '#',
+            title: 'Quote Item Details',
             tableCols: {
                 id: 13,
-                names: ['Quotation_ID', 'Item_ID', 'Item Description', 'Quantity', 'Unit Price', 'Discount', 'Total'],
+                names: ['Quotation ID', 'Item_ID', 'Item Description', 'Quantity', 'Unit Price', 'Discount', 'Total'],
                 vATandTotalsTarget: 'Total'
             },
             buttons: {
@@ -358,7 +353,7 @@ const pages = {
             largeInputs: ['Comments'],
             buttons: {
                 names: {
-                    'Submit': 'thrownQuotation',
+                    'Submit': 'processQuotation',
                 },
                 confirmAt: ['Submit']
             }
@@ -372,7 +367,7 @@ const pages = {
             buttons: {
                 names: {
                     'Generate PR': 'creatingPurchaseRequest',
-                    'Back to Quotation': 'viewQuoteDetails'
+                    'Back to Quotation': 'processQuotation'
                 },
                 confirmAt: ['Generate PR', 'Back to Quotation']
             }
@@ -394,14 +389,14 @@ const pages = {
                 id: 7,
                 names: ['PR_ID', 'Requestor', 'CC_Number', 'Rationale', 'Supplier_ID', 'Service_ID', 'Status', 'Date_Created', 'Total- include VAT', 'Budget Status', ''],
                 button: {
-                    'View item details': 'viewingItemDetails',
+                    'View details': 'viewingItemDetails',
                 }
             }
         }
     },
     viewingItemDetails: {
         1 : {
-            title: 'Procurement- Purchase Requisitions Information',
+            title: 'Procurement- Purchase Requisition Information',
             smallInputs: ['Purchase Request ID', 'RFQ Number', 'Quotation ID', 'Employee ID', 'Employee Name', 'Date created', 'Department ID', 'Department Name', 'Supplier ID', 'Supplier Name', 'Supplier Status', 'Service ID'],
             largeInputs: ['Service Description', 'Rationale'],
             buttons: {
@@ -419,7 +414,7 @@ const pages = {
             title: 'Purchase Request Item details',
             tableCols: {
                 id: 8,
-                names: ['Purchase_Request_Item_ID', 'Purchase_Request_ID', 'Account_Number', 'Item_Description', 'Quantity', 'Amount', 'Discount', 'Total'],
+                names: ['Purchase_Request_Item_ID', 'PR_ID', 'Account_Number', 'Item_Description', 'Quantity', 'Amount', 'Discount', 'Total'],
                 vATandTotalsTarget: 'Total'
             }
         }
@@ -461,7 +456,7 @@ const pages = {
     creatingDelivNote: {
         1 : {
             title: 'Procurement- Delivery Note or Voucher',
-            smallInputs: ['Purchase_Order_ID', 'Purchase_Request_ID', 'PO Date Created', 'Employee ID', 'Employee Name', 'Department ID', 'Department Name', 'Supplier ID', 'Supplier Name'],
+            smallInputs: ['Purchase_Order_ID', 'PR_ID', 'PO Date Created', 'Employee ID', 'Employee Name', 'Department ID', 'Department Name', 'Supplier ID', 'Supplier Name'],
             buttons: {
                 names: {
                     'Process Delivery Note': 'processDeliveryNote'
@@ -472,7 +467,7 @@ const pages = {
             title: 'Delivered Item details',
             tableCols: {
                 id: 23,
-                names: ['Select Item', 'Purchase_Order_Item_ID', 'Purchase_Order_ID', 'Item_Description', 'Quantity', 'Amount', 'Discount', 'Total'],
+                names: ['Select Item', 'Purchase_Order Item_ID', 'Purchase_Order ID', 'Item Description', 'Quantity', 'Amount', 'Discount', 'Total'],
                 vATandTotalsTarget: 'Total'
             },
         }
@@ -489,13 +484,13 @@ const pages = {
     },
     trackInvoice: {
         1: {
-            title: '#',
+            title: 'Track Invoice',
             searchMetric: ['Search by Quote Number', 1],
             tableCols: {
                 id: 15,
-                names: ['Invoice_ID', 'Purchase_Order_ID', 'Delivery_Note_ID', 'Employee_ID', 'Department_ID', 'Supplier_ID', 'Date_captured', 'Due_Date', ''],
+                names: ['Invoice ID', 'Purchase Order ID', 'Delivery Note ID', 'Employee ID', 'Department ID', 'Supplier ID', 'Date Captured', 'Due_Date', ''],
                 button: {
-                    'View Item Details': 'itemDetails'
+                    'View Details': 'itemDetails'
                 }
             }
         }
@@ -556,7 +551,7 @@ const pages = {
         1 : {
             title: 'Quotation- Quotation (Q)',
             smallInputs: ['Quotation ID', 'Supplier ID', 'Supplier Name', 'RFQ Number', 'Date Submitted'],
-            largeInputs: ['RFQ_Description', 'Conditions/Requirements', 'Special Instructions'],
+            largeInputs: ['RFQ Description', 'Conditions/ Requirements', 'Special Instructions'],
             buttons: {
                 names: {
                     'Generate Q Number': 'proceedWithQuote',
@@ -578,7 +573,7 @@ const pages = {
             title: 'Quotation Items Details',
             tableCols: {
                 id: 19,
-                names: ['Quotation Item ID', 'Quotation Id', 'Quotation_Item_Desc', 'Quotation_Item_Qty', 'Quotation_Item_Amt', 'Quotation_Item_Dscnt(%)', 'Total', ''],
+                names: ['Quotation Item ID', 'Quotation Id', 'Quotation Item Desc', 'Quotation Item Qty', 'Quotation Item Amt', 'Quotation Item Discount(%)', 'Total', ''],
                 button: {
                     'Delete': 'deleteFromTable'
                 },
@@ -624,9 +619,9 @@ const pages = {
             searchMetric: ['Search by RFQ Number', 2],
             tableCols: {
                 id: 22,
-                names: ['Supplier_ID', 'RFQ_Number', 'Quotation_ID', 'Date_Quoted', 'QStatus', 'Purchase_Request_ID', 'Purchase_Order_ID', 'Amount Invoiced', 'Payment Status', ''],
+                names: ['Supplier ID', 'RFQ Number', 'Quotation ID', 'Date_Quoted', 'QStatus', 'PR_ID', 'Purchase Order ID', 'Amount Invoiced', 'Payment Status', ''],
                 button: {
-                    'View Quote Details': 'submittedQuotation'
+                    'View Quote Details': 'proceedWithQuote'
                 }
             }
         }
@@ -645,13 +640,13 @@ const layoutHandlers = {
 const sequencePointer = []
 let currentPoint = null
 
-function confirmThenCall(event, buttonName, funcName){
-    if (confirm(`${buttonName}?`)) {
-        if (funcName == 'deleteFromTable') {
+function confirmThenCall(event){
+    if (confirm(`${event.target.innerHTML}?`)) {
+        if (event.target.dataset.clickRun == 'deleteFromTable') {
             deleteFromTable(event)
         } else {
-            showPage(funcName)
-            showToast(`'${buttonName}' executed.`)
+            showPage(event.target.dataset.clickRun)
+            showToast(`'${event.target.innerHTML}' executed.`)
         }
     }
 }
@@ -667,7 +662,7 @@ function confirmThenCall(event, buttonName, funcName){
 +tableCols
 -id ... number
 -names ... arr
--editIndex ... arr (means that save and cancel buttons appear)
+-editIndex ... arr
 -button
 -vATandTotalsTarget ... single val
 */
@@ -728,7 +723,7 @@ function handleButtons(buttonsObj) {
         button.innerHTML = naem
         button.dataset.clickRun = buttonsObj.names[naem]
         if ('confirmAt' in buttonsObj && naem in buttonsObj.confirmAt) {
-            button.onclick = (event) => confirmThenCall(event, event.target.innerHTML, button.dataset.clickRun)
+            button.onclick = (event) => confirmThenCall(event)
         } else {
             button.onclick = (event) => {
                 if (button.dataset.clickRun == 'deleteFromTable') {
@@ -848,7 +843,8 @@ function handleTableCols(colsObj) {
                     td.innerHTML = ''
                     inputEl.readOnly = true
                     td.appendChild(inputEl)
-                    row.style.position = 'relative'
+                    // row.style.position = 'relative'
+                    // row.style.zIndex = -1
                 }
                 row.ondblclick = ()=> {
                     row.querySelectorAll('input').forEach((el)=>{
@@ -856,18 +852,23 @@ function handleTableCols(colsObj) {
                         el.style.backgroundColor = 'white'
                     })
                     const saveBtn = document.createElement('button')
+                    saveBtn.innerHTML = 'Save'
                     const cancelBtn = document.createElement('button')
+                    cancelBtn.innerHTML = 'Cancel'
                     saveBtn.classList.add('editIndexBtn', 'editSave')
-                    cancelBtn.classList.add('editIndexBtn', 'cancelSave')
-                    saveBtn.onclick = clickedEditBtn
+                    cancelBtn.classList.add('editIndexBtn', 'editCancel')
+                    saveBtn.onclick = (event)=> clickedEditBtn(event)
+                    cancelBtn.onclick = (event)=> clickedEditBtn(event)
+                    row.lastElementChild.appendChild(saveBtn)
+                    row.lastElementChild.appendChild(cancelBtn)
                 }
             }
             if ('button' in colsObj) {
                 const el = row.querySelector('td:last-child')
                 const button = document.createElement('button')
-                const buttonWrds = el.innerHTML
                 button.className = 'pgButton'
-                button.onclick = (event) => confirmThenCall(event, buttonWrds, colsObj.button[buttonWrds])
+                button.dataset.clickRun = colsObj.button[el.innerHTML]
+                button.onclick = (event) => confirmThenCall(event)
                 button.innerHTML = el.innerHTML
                 el.innerHTML = ''
                 el.appendChild(button)
@@ -891,7 +892,11 @@ function handleTableCols(colsObj) {
             totalVal.className = 'bodyCol'
             let total = 0
             for (record of data) {
-                total+= +record[record.length-1]
+                if (+record[record.length-1]) {
+                    total+= +record[record.length-1]
+                } else {
+                    total+= +record[record.length-2]
+                }
             }
             vatVal.innerHTML = Math.round(total * 0.18)
             totalVal.innerHTML = total
@@ -906,8 +911,8 @@ function handleTableCols(colsObj) {
     return table
 }
 
-function clickedEditBtn() {
-    row.querySelectorAll('input').forEach((el)=>{
+function clickedEditBtn(ev) {
+    ev.target.parentElement.parentElement.querySelectorAll('input').forEach((el)=>{
         el.readOnly = true
         el.style.backgroundColor = 'transparent'
     })

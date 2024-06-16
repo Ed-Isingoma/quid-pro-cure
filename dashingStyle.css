@@ -177,7 +177,8 @@ body {
 
 .tableInput {
     width: 100%;
-    border: none;
+    font-size: 16px;
+    padding: 3px;
     color: black;
     background-color: transparent;
 }
@@ -188,17 +189,15 @@ body {
     color: white;
     font-weight: bold;
     font-size: 16px;
-    position: absolute;
-    top: 0;
-    z-index: 2;
+    margin: 8px 5px 0 5px;
     padding: 3px 10px;
 }
 .editSave {
-    left: 96%
+    right: 0;
 }
 
 .editCancel {
-    right: 96%;
+    left: 0;
 }
 .navigation {
     background-color: rgba(0, 97, 97, 0.48);

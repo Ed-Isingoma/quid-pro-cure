@@ -16,10 +16,10 @@
                 <button class="list-btn" onclick="showPage('processQuotation')">Process Quotation</button>
                 <button class="list-btn" onclick="showPage('thrownQuotation')">Rejected Quotations</button>
                 <button class="list-btn" onclick="showPage('purchaseReqAwaiting')">Purchase Request Awaiting Approval</button>
-                <button class="list-btn">Processed Purchase Order</button>
+                <button class="list-btn" onclick="showPage('purchaseOrder2Binvoiced')">Processed Purchase Order</button>
                 <button class="list-btn" onclick="showPage('processDeliveryNote')">Process Delivery Note or Voucher</button>
-                <button class="list-btn">Process Outstanding Items</button>
-                <button class="list-btn">RFQ Status Report</button>
+                <button class="list-btn" onclick="showPage('processApprovedPR')">Process Outstanding Items</button>
+                <button class="list-btn" onclick="showPage('submittedQuotation')">RFQ Status Report</button>
             </div>
         </div>
         <div class="nav-el">Accounts Payable
@@ -32,6 +32,12 @@
         <div class="nav-el">Budget Maintenance</div>
         <div class="nav-el">Services Maintenance</div>
         <div class="nav-el">System Administration</div>
+    </div>
+    <div class="navigation">
+        <button class="navBtn" onclick="prevPg()"><< Prev</button>
+        <button class="navBtn" onclick="nextPg()">>> Next</button>
+        <button class="navBtn"><a href="index.html">Logout</a></button>
+        <span class="navSpan">Welcome, User</span>
     </div>
     <div class="goes-down-here"></div>
 <script src="dashingscr.js"></script>

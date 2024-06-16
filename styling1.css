@@ -52,7 +52,7 @@ button:hover {
     background-color: #616161;; 
     color: #fff;
     padding: 10px;
-    position: absolute;
+    position: fixed;
     top: 80%;
     left: 42%;
     border-radius: 18px;

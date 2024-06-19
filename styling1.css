@@ -37,16 +37,29 @@ select, input {
     display: flex;
     margin-left: 30%;
 }
+.button-container a {
+    text-decoration:none ;
+    color: #000;
+}
+
+.button-container a:hover{
+    color: #fff;
+}
+
 button {
     margin-left: 15px;
     padding: 10px 20px;
-    border: 1px solid #787878;
+    border: 1px solid #310ade;
     border-radius: 6px;
     cursor: pointer;
 }
 button:hover {
-    background-color: #eee;
+    background-color: #1d3cf0;
+    color: #fff;
+    
 }
+
+
 
 .toast {
     background-color: #616161;; 

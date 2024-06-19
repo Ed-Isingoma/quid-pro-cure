@@ -1,10 +1,16 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('node:path')
-const {readFileSync, writeFileSync} = require('fs')
+const {readFileSync, writeFileSync, appendFileSync} = require('fs')
 
 ipcMain.handle('read', ()=>{
-    const archiveMain = readFileSync('archive.json')
-    return archiveMain
+    try {
+        const archiveMain = readFileSync('archive.json')
+        return archiveMain
+    } catch {
+        const fileStr = JSON.stringify({})
+        appendFileSync('archive.json', fileStr)
+        return fileStr
+    }
 })
 
 ipcMain.handle('write', (ev, jsonStr)=> {

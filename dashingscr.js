@@ -1,7 +1,32 @@
-const invoke = window.ipcCall
+const invokeIPC = window.ipcCall
 const archivePromised = window.archivePrel
 
 const archive = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(archivePromised)))
+
+//concerning the database
+// invokeIPC('databases', 'connect', '')
+// const makedb = 'create database if not exists quidprocuredb'
+// invokeIPC('databases', 'jstQuery', makedb)
+// const useDB = 'use quidprocuredb'
+// invokeIPC('databases', 'jstQuery', useDB)
+// const maketbl = 'create table if not exists themrecords (sn varchar(255), sdref varchar(255), complainant varchar(255), suspect varchar(255), offence varchar(255), reference varchar(255), remarks varchar(255), finaldisp varchar(255), timestamp varchar(255) primary key)'
+// invokeIPC('databases', 'jstQuery', maketbl)
+// function readDB() {
+//     const getRecords = 'select * from themrecords'
+//     invokeIPC('databases', 'resultQuery', getRecords)
+// }
+// function addIntoTable(arr, tableName) {
+//     const insert = `insert into ${tableName} values ("${arr[0]}", "${arr[1]}", "${arr[2]}", "${arr[3]}", "${arr[4]}", "${arr[5]}", "${arr[6]}", "${arr[7]}", "${arr[8]}")`
+//     invokeIPC('databases', 'jstQuery', insert)
+// }
+// function delFromTable(timestamp, tableName) {
+//     const toDel = `delete from ${tableName} where timestamp="${timestamp}"`
+//     invokeIPC('databases', 'jstQuery', toDel)
+// }
+// function changeRec(timestamp, newArr) {
+//     delFromTable(timestamp, 'themrecords')
+//     addIntoTable(newArr, 'themrecords')
+// }
 
 const pages = {
     home: {
@@ -421,7 +446,7 @@ const sequencePointer = []
 let currentPoint = null
 
 function confirmThenCall(event) {
-    invoke('dialog', event.target.innerHTML).then((res)=>{
+    invokeIPC('dialog', event.target.innerHTML).then((res)=>{
         if (JSON.parse(res).response == 0) {
             const funcName = event.target.dataset.clickRun
             if (funcName.slice(-1) == '*') {
@@ -487,7 +512,7 @@ function deleteFromTable(ev) {
     const table = row.parentElement
     table.removeChild(row)
     archive[table.dataset.tableID].splice(index, 1)
-    invoke('write', JSON.stringify(archive)).then((res)=>{
+    invokeIPC('write', JSON.stringify(archive)).then((res)=>{
     })
     showToast('Record deleted.')
 }
@@ -597,7 +622,7 @@ function updateTable2(ev) {
     })
     values.push('Delete')
     archive[2].unshift(values)
-    invoke('write', JSON.stringify(archive))
+    invokeIPC('write', JSON.stringify(archive))
     showPage(sequencePointer[currentPoint])
     showToast('Table Updated.')
 }
@@ -616,7 +641,7 @@ function updateTable19(ev){
     values.unshift(quoteID)
     values.unshift(itemID)
     archive[19].unshift(values)
-    invoke('write', JSON.stringify(archive))
+    invokeIPC('write', JSON.stringify(archive))
     showPage(sequencePointer[currentPoint])
     showToast('Table Updated.')
 }

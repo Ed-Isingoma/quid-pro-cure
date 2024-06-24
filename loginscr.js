@@ -1,11 +1,13 @@
+const invokeIPCSync = window.ipcCallSync
+
 function checkLogins() {
     const usr = document.querySelector('#username')
     const psw = document.querySelector('#password')
     const username = usr.value
-    const password = psw.value
+    const password =  psw.value
     usr.value = ''
     psw.value = ''
-    if (username == 'testuser' && password == 'abc123') {
+    if (invokeIPCSync('checkLogins', username, password)) {
         const link = document.querySelector('.enter')
         const profile = document.querySelector('#usertype')
         if (profile.value == 'Employee') {

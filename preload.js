@@ -28,40 +28,34 @@ for (item in dbSetup) {
         if (err) throw err
     })
 }
-const getLogins = 'select * from Employee'
 
-db.query(getLogins, (err, result)=> {
-    if (err) throw err
-    const resultObj = {}
-    if (!result.length) {
-        const insertQuery = 'insert into Employee values ("001", "Ssebaggala", "testuser", "abc123", "sales", "marketer", "ssebs@gmail.com")'
-        db.query(insertQuery, (err, res)=> {if (err) throw err})
-        resultObj['testuser'] = 'abc123'
-    } else {
-        for (child of result) {
-            const key = child['LastName']
-            resultObj[key] = child['Password']
+function loadLogins() {
+    const getLogins = 'select * from Employee'
+    db.query(getLogins, (err, result)=> {
+        if (err) throw err
+        const resultObj = {}
+        if (!result.length) {
+            const insertQuery = 'insert into Employee values ("001", "Ssebaggala", "testuser", "abc123", "sales", "marketer", "ssebs@gmail.com")'
+            db.query(insertQuery, (err, res)=> {if (err) throw err})
+            resultObj['testuser'] = 'abc123'
+        } else {
+            for (child of result) {
+                const key = child['LastName']
+                resultObj[key] = child['Password']
+            }
         }
-    }
-    ipcRenderer.invoke('stageLogins', resultObj)
+        ipcRenderer.invoke('stageLogins', resultObj)
+    
+    })
+}
+loadLogins()
 
+ipcRenderer.on('addDBAccount', (e, query) => {
+    db.query(query, (err, res)=> {
+        if (err) throw err
+    })
+    loadLogins()
 })
-
-// ipcRenderer.on('databases', (e, arg1, arg2)=>{
-//     if (arg1 == 'connect') {
-//         db.connect((err)=> {if (err) throw err})
-//     } else if (arg1 == 'jstQuery') {
-//         db.query(arg2, (err, res)=> {
-//                 if (err) throw err;
-//             })
-//     } else if (arg1 == 'resultQuery') {
-//         db.query(arg2, (err, result)=> {
-//             if (err) throw err;
-//             ipcRenderer.send('readResultIn', JSON.stringify(result))
-//             document.querySelector('#bell').dispatchEvent(new MouseEvent('click'))
-//         })
-//     }
-// })
 
 contextBridge.exposeInMainWorld('ipcCall', ipcRenderer.invoke)
 contextBridge.exposeInMainWorld('ipcCallSync', ipcRenderer.sendSync)

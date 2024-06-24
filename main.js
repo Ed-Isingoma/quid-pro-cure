@@ -17,17 +17,18 @@ ipcMain.handle('write', (ev, jsonStr)=> {
     writeFileSync('archive.json', jsonStr)
 })
 
-ipcMain.handle('databases',(e, arg1, arg2)=> {
-    e.sender.send('databases', arg1, arg2)
+// ipcMain.handle('databases',(e, arg1, arg2)=> {
+//     e.sender.send('databases', arg1, arg2)
+// })
+
+ipcMain.handle('addDBAccount', (e, argu)=> {
+    e.sender.send('addDBAccount', argu)
 })
 
-let loginsObj = {
-    test2: 'abc'
-}
+let loginsObj
 
 ipcMain.handle('stageLogins', (e, obj)=>{
-    loginsObj = {...loginsObj, ...obj}
-    return JSON.stringify(loginsObj)
+    loginsObj = obj
 })
 
 ipcMain.on('checkLogins', (e, usr, psw) => {

@@ -31,9 +31,11 @@ if (signupDoc) {
         const psw = document.getElementById('password')
         const confirmPsw = document.getElementById('confirm-password')
         const usr = document.getElementById('username')
+        const mail = document.getElementById('email')
         const username = usr.value
         const password = psw.value
         const confirmPassword = confirmPsw.value
+        const email = mail.value
     
         if (password !== confirmPassword) {
             showToast('Passwords do not match!')
@@ -41,18 +43,16 @@ if (signupDoc) {
             psw.value = ''
             usr.value = ''
             confirmPsw.value = ''
+            mail.value = ''
     
             let employeeID = ''
             const dateArr = new Date().toString().split(' ')
             dateArr.splice(-4, 4)
-            employeeID = dateArr.join('').replace(/:/g, '')
+            employeeID = dateArr.join('').replace(/:/g, '').slice(6)
     
             const firstName = ''
-            const departmentName = 'Marketing'
-            const jobTitle = 'Intern'
-            const email = 'default@pms.com'
             
-            const query = `insert into Employee values ("${employeeID}", "${firstName}", "${username}", "${password}", "${departmentName}", "${jobTitle}", "${email}")`
+            const query = `insert into Employee values ("${employeeID}", "${firstName}", "${username}", "${password}", "${email}")`
             invokeIPC('addDBAccount', query)
             document.querySelector('.toLogin').dispatchEvent(new MouseEvent('click'))
             showToast('Account created. Sign in')

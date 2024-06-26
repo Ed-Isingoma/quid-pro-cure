@@ -8,11 +8,13 @@ async function archiveInit () {
 }
 archiveInit()
 
-//concerning the database
 const dbSetup = {
     makedb: 'create database if not exists quidprocuredb',
     useDB: 'use quidprocuredb',
-    makeLogintbl: 'create table if not exists Employee (employeeID varchar(255) primary key, FirstName varchar(255), LastName varchar(255), Password varchar(255), DepartmentName varchar(255), JobTitle varchar(255), Email varchar(255))'
+    makeLogintbl: 'create table if not exists Employee (employeeID varchar(255) primary key, FirstName varchar(255), LastName varchar(255), Password varchar(255), DepartmentName varchar(255), JobTitle varchar(255), Email varchar(255))',
+    makeTable19: 'create table if not exists QuotationItemDetails (qItemID varchar(255) primary key, qID varchar(255), ItemDesc varchar(255), Qty varchar(255), Amount varchar(255), Discount varchar(255), Total varchar(255), buttonName varchar(255))',
+    makeTable2: 'create table if not exists RFQitemDetails (rfqItemID varchar(255) primary key, rfqNumber varchar(255), rfqItemDesc varchar(255), rfqItemQty varchar(255), buttonName varchar(255))',
+    makeTable25: 'create table if not exists BudgetMaintenance (itemID varchar(255) primary key, Description varchar(255), Amount varchar(255), Date varchar(255), buttonName varchar(255))'
 }
 
 const db = thesql.createConnection({
@@ -55,6 +57,12 @@ ipcRenderer.on('addDBAccount', (e, query) => {
         if (err) throw err
     })
     loadLogins()
+})
+
+ipcRenderer.on('queryTable', (e, query)=> {
+    db.query(query, (err, res)=> {
+        if (err) throw err
+    })
 })
 
 contextBridge.exposeInMainWorld('ipcCall', ipcRenderer.invoke)

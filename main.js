@@ -25,6 +25,10 @@ ipcMain.handle('addDBAccount', (e, argu)=> {
     e.sender.send('addDBAccount', argu)
 })
 
+ipcMain.handle('queryTable', (e, argu)=> {
+    e.sender.send('queryTable', argu)
+})
+
 let loginsObj
 
 ipcMain.handle('stageLogins', (e, obj)=>{

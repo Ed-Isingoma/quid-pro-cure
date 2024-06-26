@@ -3,6 +3,12 @@ const archivePromised = window.archivePrel
 
 const archive = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(archivePromised)))
 
+// archive[25] = []
+// archive[26] = []
+// function refreshTable26(){
+
+// }
+// refreshTable26()
 //concerning the database
 // invokeIPC('databases', 'connect', '')
 // const makedb = 'create database if not exists quidprocuredb'
@@ -28,6 +34,35 @@ const archive = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(archiv
 //     addIntoTable(newArr, 'themrecords')
 // }
 
+function updateTables2526(ev) {
+    ev.preventDefault()
+    const values = []
+    document.querySelectorAll('.layoutBorder:nth-of-type(1) input').forEach(e => {
+        values.push(e.value)
+    })
+    values.push('Delete')
+    let expenses = 0
+    document.querySelectorAll('.layoutBorder:nth-of-type(2) td:nth-of-type(2)').forEach(e => {
+        expenses += +e.textContent
+    })
+    expenses+= +values[1]
+    const newTableVals = [500000, expenses]
+    newTableVals[2] = newTableVals[0] - newTableVals[1]
+    archive[25].unshift(values)
+    archive[26][0] = newTableVals
+
+    let itemID = ''
+    const dateArr = new Date().toString().split(' ')
+    dateArr.splice(-4, 4)
+    itemID = dateArr.join('').replace(/:/g, '').slice(6)
+
+    const query = `insert into BudgetMaintenance values ("${itemID}", "${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}")`
+    invokeIPC('queryTable', query)
+    invokeIPC('write', JSON.stringify(archive))
+    showPage(sequencePointer[currentPoint])
+    showToast('Table Updated.')
+}
+
 const pages = {
     home: {
         1: {
@@ -35,6 +70,33 @@ const pages = {
             tableCols: {
                 id: 0,
                 names: ['Request for quote', 'Purchase request', 'Purchase order', 'Invoice']
+            }
+        }
+    },
+    trackProgress: {
+        1: {
+            title: 'Budget Maintenance',
+            smallInputs: ['Description', 'Amount', 'Date'],
+            buttons: {
+                names: {
+                    'Add Transaction': 'updateTables2526*'
+                }
+            }
+        },
+        2: {
+            tableCols: {
+                id: 25,
+                names: ['Description', 'Amount', 'Date', ''],
+                button: {
+                    'Delete': 'deleteFromTable*'
+                }
+            }
+        },
+        3: {
+            title: 'Total Overview',
+            tableCols: {
+                id: 26,
+                names: ['Budget', 'Expenses', 'Balance']
             }
         }
     },
@@ -446,11 +508,11 @@ const sequencePointer = []
 let currentPoint = null
 
 function confirmThenCall(event) {
-    invokeIPC('dialog', event.target.innerHTML).then((res)=>{
+    invokeIPC('dialog', event.target.innerHTML).then((res) => {
         if (JSON.parse(res).response == 0) {
             const funcName = event.target.dataset.clickRun
             if (funcName.slice(-1) == '*') {
-                window[funcName.substring(0,funcName.length-1)](event)
+                window[funcName.substring(0, funcName.length - 1)](event)
             } else {
                 showPage(funcName)
                 showToast(`'${event.target.innerHTML}' executed.`)
@@ -512,9 +574,22 @@ function deleteFromTable(ev) {
     const table = row.parentElement
     table.removeChild(row)
     archive[table.dataset.tableID].splice(index, 1)
-    invokeIPC('write', JSON.stringify(archive)).then((res)=>{
+    invokeIPC('write', JSON.stringify(archive)).then((res) => {
     })
     showToast('Record deleted.')
+    const firstChild = row.querySelector('td:first-child').textContent
+    if (table.dataset.tableID == 19 ) {
+        const query = `delete from QuotationItemDetails where qItemID= "${firstChild}"`
+        invokeIPC('queryTable', query)
+    }
+    if (table.dataset.tableID == 2) {
+        const query = `delete from RFQitemDetails where rfqItemID= "${firstChild}"`
+        invokeIPC('queryTable', query)
+    }
+    if (table.dataset.tableID == 25) {
+        const query = `delete from BudgetMaintenance where Description= "${firstChild}"`
+        invokeIPC('queryTable', query)
+    }
 }
 
 function handleTitle(title) {
@@ -538,7 +613,7 @@ function handleButtons(buttonsObj) {
             button.onclick = (event) => {
                 const funcName = button.dataset.clickRun
                 if (funcName.slice(-1) == '*') {
-                    window[funcName.substring(0,funcName.length-1)](event)
+                    window[funcName.substring(0, funcName.length - 1)](event)
                 } else {
                     showPage(funcName)
                     showToast(`'${button.innerHTML}' executed.`)
@@ -621,25 +696,29 @@ function updateTable2(ev) {
         values.push(e.value)
     })
     values.push('Delete')
+    const query = `insert into RFQitemDetails values ("${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}", "${values[4]}")`
+    invokeIPC('queryTable', query)
     archive[2].unshift(values)
     invokeIPC('write', JSON.stringify(archive))
     showPage(sequencePointer[currentPoint])
     showToast('Table Updated.')
 }
 
-function updateTable19(ev){
+function updateTable19(ev) {
     ev.preventDefault()
     const values = []
-    document.querySelectorAll('.layoutBorder:nth-of-type(2) input').forEach(e=>{
+    document.querySelectorAll('.layoutBorder:nth-of-type(2) input').forEach(e => {
         values.push(e.value)
     })
     const total = (+values[2] - +values[3]) * +values[1]
     values.push(total)
     values.push('Delete')
-    const quoteID = 'QU0' + Math.round(Math.random()*100).toString()
-    const itemID = 'Q_ITEM0' + Math.round(Math.random()*100).toString()
+    const quoteID = 'QU0' + Math.round(Math.random() * 100).toString()
+    const itemID = 'Q_ITEM0' + Math.round(Math.random() * 100).toString()
     values.unshift(quoteID)
     values.unshift(itemID)
+    const query = `insert into QuotationItemDetails values ("${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}", "${values[4]}", "${values[5]}", "${values[6]}", "${values[7]}")`
+    invokeIPC('queryTable', query)
     archive[19].unshift(values)
     invokeIPC('write', JSON.stringify(archive))
     showPage(sequencePointer[currentPoint])

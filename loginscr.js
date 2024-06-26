@@ -25,7 +25,6 @@ function checkLogins() {
 const signupDoc = document.getElementById('signup-form')
 if (signupDoc) {
     signupDoc.addEventListener('submit', (event) => {
-        'Employee (employeeID varchar(255) primary key, FirstName varchar(255), LastName varchar(255), Password varchar(255), DepartmentName varchar(255), JobTitle varchar(255), Email varchar(255))'
     
         event.preventDefault()
     

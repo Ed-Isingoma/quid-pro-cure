@@ -1,5 +1,5 @@
 const { ipcRenderer, contextBridge } = require("electron")
-const thesql = require('mysql')
+const thesql = require('mysql2')
 
 async function archiveInit () {
     await ipcRenderer.invoke('read').then(result=>{
@@ -19,8 +19,8 @@ const dbSetup = {
 
 const db = thesql.createConnection({
     host: 'localhost',
-    user: 'ed',
-    password: 'aed'
+    user: 'root',
+    password: '1234'
 })
 
 db.connect((err)=> {if (err) throw err})

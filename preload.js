@@ -37,7 +37,7 @@ function loadLogins() {
         if (err) throw err
         const resultObj = {}
         if (!result.length) {
-            const insertQuery = 'insert into Employee values ("001", "Ssebaggala", "testuser", "abc123", "sales", "marketer", "ssebs@gmail.com")'
+            const insertQuery = 'insert into Employee values ("001", "Ssebaggala", "testuser", "abc123", "ssebs@gmail.com")'
             db.query(insertQuery, (err, res)=> {if (err) throw err})
             resultObj['testuser'] = 'abc123'
         } else {

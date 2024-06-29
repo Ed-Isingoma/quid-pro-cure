@@ -14,7 +14,8 @@ const dbSetup = {
     makeLogintbl: 'create table if not exists Employee (employeeID varchar(255) primary key, FirstName varchar(255), LastName varchar(255), Password varchar(255), Email varchar(255))',
     makeTable19: 'create table if not exists QuotationItemDetails (qItemID varchar(255) primary key, qID varchar(255), ItemDesc varchar(255), Qty varchar(255), Amount varchar(255), Discount varchar(255), Total varchar(255), buttonName varchar(255))',
     makeTable2: 'create table if not exists RFQitemDetails (rfqItemID varchar(255) primary key, rfqNumber varchar(255), rfqItemDesc varchar(255), rfqItemQty varchar(255), buttonName varchar(255))',
-    makeTable25: 'create table if not exists BudgetMaintenance (itemID varchar(255) primary key, Description varchar(255), Amount varchar(255), Date varchar(255), buttonName varchar(255))'
+    makeTable25: 'create table if not exists BudgetMaintenance (itemID varchar(255) primary key, Description varchar(255), Amount varchar(255), Date varchar(255), buttonName varchar(255))',
+    makeTable24: 'create table if not exists GenerateRFQ (RFQNumber varchar(255) primary key, EmployeeID varchar(255), DateCreated varchar(255), ClosingDate varchar(255), Description varchar(255), Conditions varchar(255))'
 }
 
 const db = thesql.createConnection({

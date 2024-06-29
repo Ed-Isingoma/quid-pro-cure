@@ -3,65 +3,7 @@ const archivePromised = window.archivePrel
 
 const archive = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(archivePromised)))
 
-// archive[25] = []
-// archive[26] = []
-// function refreshTable26(){
-
-// }
-// refreshTable26()
-//concerning the database
-// invokeIPC('databases', 'connect', '')
-// const makedb = 'create database if not exists quidprocuredb'
-// invokeIPC('databases', 'jstQuery', makedb)
-// const useDB = 'use quidprocuredb'
-// invokeIPC('databases', 'jstQuery', useDB)
-// const maketbl = 'create table if not exists themrecords (sn varchar(255), sdref varchar(255), complainant varchar(255), suspect varchar(255), offence varchar(255), reference varchar(255), remarks varchar(255), finaldisp varchar(255), timestamp varchar(255) primary key)'
-// invokeIPC('databases', 'jstQuery', maketbl)
-// function readDB() {
-//     const getRecords = 'select * from themrecords'
-//     invokeIPC('databases', 'resultQuery', getRecords)
-// }
-// function addIntoTable(arr, tableName) {
-//     const insert = `insert into ${tableName} values ("${arr[0]}", "${arr[1]}", "${arr[2]}", "${arr[3]}", "${arr[4]}", "${arr[5]}", "${arr[6]}", "${arr[7]}", "${arr[8]}")`
-//     invokeIPC('databases', 'jstQuery', insert)
-// }
-// function delFromTable(timestamp, tableName) {
-//     const toDel = `delete from ${tableName} where timestamp="${timestamp}"`
-//     invokeIPC('databases', 'jstQuery', toDel)
-// }
-// function changeRec(timestamp, newArr) {
-//     delFromTable(timestamp, 'themrecords')
-//     addIntoTable(newArr, 'themrecords')
-// }
-
-function updateTables2526(ev) {
-    ev.preventDefault()
-    const values = []
-    document.querySelectorAll('.layoutBorder:nth-of-type(1) input').forEach(e => {
-        values.push(e.value)
-    })
-    values.push('Delete')
-    let expenses = 0
-    document.querySelectorAll('.layoutBorder:nth-of-type(2) td:nth-of-type(2)').forEach(e => {
-        expenses += +e.textContent
-    })
-    expenses+= +values[1]
-    const newTableVals = [500000, expenses]
-    newTableVals[2] = newTableVals[0] - newTableVals[1]
-    archive[25].unshift(values)
-    archive[26][0] = newTableVals
-
-    let itemID = ''
-    const dateArr = new Date().toString().split(' ')
-    dateArr.splice(-4, 4)
-    itemID = dateArr.join('').replace(/:/g, '').slice(6)
-
-    const query = `insert into BudgetMaintenance values ("${itemID}", "${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}")`
-    invokeIPC('queryTable', query)
-    invokeIPC('write', JSON.stringify(archive))
-    showPage(sequencePointer[currentPoint])
-    showToast('Table Updated.')
-}
+// archive[27] = []
 
 const pages = {
     home: {
@@ -84,6 +26,8 @@ const pages = {
             }
         },
         2: {
+            title: "Budget Information",
+            specialFunc: ()=>{makeDate(3, 1)},
             tableCols: {
                 id: 25,
                 names: ['Description', 'Amount', 'Date', ''],
@@ -100,6 +44,28 @@ const pages = {
             }
         }
     },
+    rateSuppliers: {
+        1: {
+            title: "Give ratings to suppliers",
+            smallInputs: ['Supplier Name'],
+            buttons: {
+                names: {
+                    'Give Rating': "updateTable27*"
+                }
+            }
+        },
+        2: {
+            title: "Supplier Ratings",
+            specialFunc: ratings,
+            tableCols: {
+                id: 27,
+                names: ["Supplier Name", "Rating", ''],
+                button: {
+                    'Delete': 'deleteFromTable*'
+                }
+            }
+        }
+    },
     createRFQ: {
         1: {
             title: 'Procurement- Request for Quotation',
@@ -107,7 +73,7 @@ const pages = {
             largeInputs: ['RFQ Description', 'RFQ Conditions/criteria'],
             buttons: {
                 names: {
-                    'Generate RFQ number': 'createRFQ',
+                    'Generate RFQ number': 'updateTable24*',
                     'Cancel RFQ': 'createRFQ'
                 },
                 confirmAt: ['Generate RFQ number']
@@ -115,6 +81,10 @@ const pages = {
         },
         2: {
             title: 'RFQ Item',
+            specialFunc: ()=>{
+                makeDate(3, 1)
+                makeDate(4, 1)
+            },
             smallInputs: ['RFQ_Item_ID', 'RFQ_Number', 'RFQ_Item_Description', 'RFQ_Item_Qty'],
             buttons: {
                 names: {
@@ -502,6 +472,7 @@ const layoutHandlers = {
     largeInputs: handleLargeInputs,
     buttons: handleButtons,
     tableCols: handleTableCols,
+    specialFunc: callSpecialFunc
 }
 
 const sequencePointer = []
@@ -520,6 +491,11 @@ function confirmThenCall(event) {
         }
     })
 }
+
+function callSpecialFunc(funcName) {
+    funcName()
+    return document.createElement('div')
+}
 /*
 >page name 
 >>layout name
@@ -535,6 +511,7 @@ function confirmThenCall(event) {
 -editIndex ... arr
 -button
 -vATandTotalsTarget ... single val
+-specialFunc .. name of func
 */
 
 function setNavButtons(pgName) {
@@ -723,6 +700,83 @@ function updateTable19(ev) {
     invokeIPC('write', JSON.stringify(archive))
     showPage(sequencePointer[currentPoint])
     showToast('Table Updated.')
+}
+
+function updateTable24(ev) {
+    ev.preventDefault()
+    const values = []
+    document.querySelectorAll('.layoutBorder:nth-of-type(1) input, .layoutBorder:nth-of-type(1) textarea').forEach(e => {
+        values.push(e.value)
+    })
+    const query = `insert into GenerateRFQ values ("${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}", "${values[4]}", "${values[5]}")`
+    invokeIPC('queryTable', query)
+    showPage(sequencePointer[currentPoint])
+    showToast('Database updated.')
+}
+
+function makeDate(num, layoutNum) {
+    const input = document.querySelector(`.layoutBorder:nth-of-type(${layoutNum}) .oneInput:nth-of-type(${num}) input`)
+    console.log()
+    input.type = 'date'
+}
+
+function updateTable27(ev) {
+    ev.preventDefault()
+    const values = []
+    const inputVal = document.querySelector('.layoutBorder:nth-of-type(1) input').value
+    const selectVal = document.querySelector('.layoutBorder:nth-of-type(1) select').value
+    values.push(inputVal)
+    values.push(selectVal)
+    values.push('Delete')
+    archive[27].unshift(values)
+    invokeIPC('write', JSON.stringify(archive))
+    showPage(sequencePointer[currentPoint])
+    showToast('Table Updated.')
+}
+
+function updateTables2526(ev) {
+    ev.preventDefault()
+    const values = []
+    document.querySelectorAll('.layoutBorder:nth-of-type(1) input').forEach(e => {
+        values.push(e.value)
+    })
+    values.push('Delete')
+    let expenses = 0
+    document.querySelectorAll('.layoutBorder:nth-of-type(2) td:nth-of-type(2)').forEach(e => {
+        expenses += +e.textContent
+    })
+    expenses+= +values[1]
+    const newTableVals = [500000, expenses]
+    newTableVals[2] = newTableVals[0] - newTableVals[1]
+    archive[25].unshift(values)
+    archive[26][0] = newTableVals
+
+    let itemID = ''
+    const dateArr = new Date().toString().split(' ')
+    dateArr.splice(-4, 4)
+    itemID = dateArr.join('').replace(/:/g, '').slice(6)
+
+    const query = `insert into BudgetMaintenance values ("${itemID}", "${values[0]}", "${values[1]}", "${values[2]}", "${values[3]}")`
+    invokeIPC('queryTable', query)
+    invokeIPC('write', JSON.stringify(archive))
+    showPage(sequencePointer[currentPoint])
+    showToast('Table Updated.')
+}
+
+function ratings() {
+    const inputsDiv = document.querySelector('.layoutBorder:nth-of-type(1) .inputsDiv')
+    const oneInput = document.createElement('div')
+    oneInput.classList.add('oneInput')
+    oneInput.innerHTML = `
+    <label>Rating</label>
+    <select name="rating" id="rating">
+        <option value="Poor">Poor</option>
+        <option value="Fair">Fair</option>
+        <option value="Good" selected>Good</option>
+        <option value="Average">Very Good</option>
+    </select>
+    `
+    inputsDiv.appendChild(oneInput)
 }
 
 function handleTableCols(colsObj) {
